@@ -1,0 +1,48 @@
+setcpm(170/4)
+
+$Drums: stack(
+  sound("bd").bank("RolandTR808").beat("0, 3, 7?, 10",16),
+  s("sd:2").beat("4,12",16),
+  s("hh!16").lpf(saw.range(500, 5000))
+.decay(.04).sustain(0)._scope(1).color("blue")
+  ).orbit(2)._scope()
+
+$Bass:s("supersaw!4, square")
+  .attack(.1).decay(.25).release(.4)
+  .lpf(2250).lpenv(2).lpa(.03).lpr(.2).lpd(.3)
+   .note("<c# f d# [d# a#2]>/2".sub(12)).orbit(3)
+  .lpf(slider(1602, 100, 2000, 1)).lpenv("2")
+.orbit(2)._scope().color("purple")
+
+$voice: stack(
+
+  note("<[f3 g#3 c4 -]*4 [f#3 g#3 c#4 - f#3 g#3 c#4 - f#3 g#3 c#4 - c#4 d#4 c#4 g#3]>/4").sound("triangle, gm_acoustic_guitar")
+  .gain(.7).delay(.3).color("green")
+  .room(2)._spectrum()
+)
+_$piano: stack(
+  note("<- - g#3 f#3 <f3>*4 f3 <d#3>*6 [c#3 f3] - - g#3 f#3 a#3 c#3 [c#3 a#3][[a#3 g#3]]>*2").fm(4)
+.fmh("<1>")
+  .lpf(slider(1184, 100, 2000, 1)).decay(.1)
+.sustain(.25)
+.release(.2)
+  .room(1)
+  .crush(7)
+  
+  
+._scope().color("red")
+)
+
+$noise: sound("bd*2,<white pink brown>*16").gain(".8")
+.decay(.04).sustain(0)._scope().color("white")
+noise("brown")
+s("crackle*4").density("<0.01 0.04 0.2 0.5>".slow(2))._scope().color("orange")
+
+$drums: stack(
+s("bd sd [rim bd] sd,[~ hh]*4").bank("CasioRZ1")
+.off(2/16, x=>x.speed(1.5).gain(.7)
+.off(3/16, y=>y.vowel("<a e i o>*8"))).crush()
+)
+_$sixsev: stack(
+  sound("numbers:6 numbers:7").gain("2")
+)
